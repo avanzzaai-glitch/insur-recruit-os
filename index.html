@@ -59,7 +59,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;border-radius:10px;color:var(--t2);font-size:20px;line-height:1;flex-shrink:0;transition:background .15s}
 .hamburger:hover{background:var(--bg)}
 .tb-title{font-size:16px;font-weight:800;color:var(--t1);white-space:nowrap}
-.tb-sub{font-size:11px;color:var(--t3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-sub{font-size:11px;color:var(--t3);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px}
 .tb-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
 
 /* ===== CONTENT ===== */
@@ -239,7 +239,7 @@ code{background:var(--card);border:1px solid var(--border);padding:2px 7px;borde
   .sb.open{transform:translateX(0);box-shadow:var(--shadow-lg)}
   .hamburger{display:flex;align-items:center;justify-content:center}
   .tb-actions .btn-navy{display:none}
-  .content{padding:14px 14px calc(80px + env(safe-area-inset-bottom));gap:12px}
+  .content{padding:12px 10px calc(80px + env(safe-area-inset-bottom));gap:12px}
   .kpi-grid{grid-template-columns:repeat(2,1fr);gap:10px}
   .kv{font-size:22px}
   .row2{grid-template-columns:1fr}
@@ -272,6 +272,25 @@ code{background:var(--card);border:1px solid var(--border);padding:2px 7px;borde
   .pill{padding:9px 14px;font-size:13px}
   /* Tabs padding reducido */
   .tab{padding:10px 12px;font-size:12px}
+}
+
+
+@media(max-width:480px){
+  .sc-form-grid{grid-template-columns:1fr!important}
+  .card{border-radius:14px}
+}
+@media(max-width:768px){
+  .sc-form-grid{grid-template-columns:1fr 1fr}
+  /* Título topbar no se corte */
+  .tb-title{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 140px)}
+  .tb-sub{max-width:calc(100vw - 140px)}
+  /* Cards ocupan todo el ancho */
+  .card{margin:0}
+}
+
+
+@media(max-width:768px){
+  .li-main-grid{grid-template-columns:1fr!important}
 }
 
 </style>
@@ -448,7 +467,7 @@ code{background:var(--card);border:1px solid var(--border);padding:2px 7px;borde
         
       </div>
       <div class="content">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="li-main-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
           <div class="card">
             <div class="ch"><div class="ct">Criterios de busqueda</div><button class="btn btn-xs btn-ghost" onclick="resetCriteria()">Resetear</button></div>
             <div style="padding:12px;display:flex;flex-direction:column;gap:10px">
@@ -499,17 +518,17 @@ code{background:var(--card);border:1px solid var(--border);padding:2px 7px;borde
         
       </div>
       <div class="content">
-        <div class="card" style="padding:13px">
-          <div class="sec-title" style="margin-bottom:10px">Perfil del candidato</div>
-          <div class="grid2" style="gap:9px;margin-bottom:10px">
+        <div class="card" style="padding:16px">
+          <div class="sec-title" style="margin-bottom:12px">Perfil del candidato</div>
+          <div class="sc-form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
             <div><div class="fl-label">Nombre</div><input type="text" id="sc-nombre" value="Carlos Mendoza Ruiz"/></div>
-            <div><div class="fl-label">Cargo actual</div><input type="text" id="sc-cargo" value="Gerente de Ventas en GNP Seguros"/></div>
+            <div><div class="fl-label">Cargo actual</div><input type="text" id="sc-cargo" value="Gerente de Ventas"/></div>
             <div><div class="fl-label">Empresa</div><input type="text" id="sc-empresa" value="GNP Seguros"/></div>
-            <div><div class="fl-label">Anos de experiencia</div><input type="text" id="sc-anios" value="12"/></div>
+            <div><div class="fl-label">Años de experiencia</div><input type="text" id="sc-anios" value="12"/></div>
             <div><div class="fl-label">Ciudad</div><input type="text" id="sc-ciudad" value="Ciudad de Mexico"/></div>
             <div><div class="fl-label">Sector</div><input type="text" id="sc-sector" value="Seguros"/></div>
           </div>
-          <button class="btn btn-teal" id="sc-btn" onclick="runScoring()">Evaluar con IA</button>
+          <button class="btn btn-teal btn-full" id="sc-btn" onclick="runScoring()" style="width:100%;justify-content:center;padding:13px;font-size:14px">⭐ Evaluar con IA</button>
         </div>
         <div id="sc-result"></div>
         <div class="hint">Edita los campos con datos reales. La IA evalua experiencia comercial, sector, trayectoria y ubicacion para asignar score 1–10 con justificacion detallada.</div>
@@ -552,7 +571,7 @@ code{background:var(--card);border:1px solid var(--border);padding:2px 7px;borde
               </select>
             </div>
           </div>
-          <button class="btn btn-teal" id="em-btn" onclick="runEmail()">✉ Redactar email con IA</button>
+          <button class="btn btn-teal btn-full" id="em-btn" onclick="runEmail()" style="width:100%;justify-content:center;padding:13px;font-size:14px">✉️ Redactar email con IA</button>
         </div>
         <div id="em-result"></div>
         <div class="hint">La IA redacta un email profesional en espanol mexicano, personalizado al cargo y empresa del candidato. Incluye invitacion a videollamada de 30 min con tu enlace de Calendly.</div>

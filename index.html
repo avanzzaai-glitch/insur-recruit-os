@@ -692,17 +692,17 @@ async function testApi(){
 }
 
 async function callClaude(system,userMsg){
-  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system,messages:[{role:'user',content:userMsg}]})})
+  const r=await fetch('https://avanzza-21d71ce3.base44.app/functions/claudeProxy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system,messages:[{role:'user',content:userMsg}]})})
   const d=await r.json();return d.content?.[0]?.text||''
 }
 
 async function callClaudeWithImage(system,userMsg,imageData,mediaType){
-  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:mediaType,data:imageData}},{type:'text',text:userMsg}]}]})})
+  const r=await fetch('https://avanzza-21d71ce3.base44.app/functions/claudeProxy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:mediaType,data:imageData}},{type:'text',text:userMsg}]}]})})
   const d=await r.json();return d.content?.[0]?.text||''
 }
 
 async function callClaudeWithPDF(system,userMsg,pdfData){
-  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system,messages:[{role:'user',content:[{type:'document',source:{type:'base64',media_type:'application/pdf',data:pdfData}},{type:'text',text:userMsg}]}]})})
+  const r=await fetch('https://avanzza-21d71ce3.base44.app/functions/claudeProxy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system,messages:[{role:'user',content:[{type:'document',source:{type:'base64',media_type:'application/pdf',data:pdfData}},{type:'text',text:userMsg}]}]})})
   const d=await r.json();return d.content?.[0]?.text||''
 }
 

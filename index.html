@@ -63,7 +63,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tb-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
 
 /* ===== CONTENT ===== */
-.content{flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:14px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.content{flex:1;overflow-y:auto;overflow-x:hidden;padding:18px 20px;display:flex;flex-direction:column;gap:14px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
 
 /* ===== BUTTONS ===== */
 .btn{border:none;padding:9px 16px;border-radius:var(--r);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;letter-spacing:.1px}
@@ -239,7 +239,7 @@ code{background:var(--card);border:1px solid var(--border);padding:2px 7px;borde
   .sb.open{transform:translateX(0);box-shadow:var(--shadow-lg)}
   .hamburger{display:flex;align-items:center;justify-content:center}
   .tb-actions .btn-navy{display:none}
-  .content{padding:14px 14px calc(var(--nb-h) + 14px);gap:12px}
+  .content{padding:14px 14px calc(80px + env(safe-area-inset-bottom));gap:12px}
   .kpi-grid{grid-template-columns:repeat(2,1fr);gap:10px}
   .kv{font-size:22px}
   .row2{grid-template-columns:1fr}
@@ -256,6 +256,24 @@ code{background:var(--card);border:1px solid var(--border);padding:2px 7px;borde
   .grid3{grid-template-columns:1fr 1fr}
   .content{padding:12px 12px calc(var(--nb-h) + 12px)}
 }
+
+@media(max-width:768px){
+  .view.active{overflow:visible}
+  .main{overflow:hidden}
+  /* Evitar que grids rompan en vistas IA */
+  .grid2,.grid3{grid-template-columns:1fr!important}
+  /* Botones de acción en topbar visibles en mobile */
+  .tb-actions .btn-teal,.tb-actions .btn-ghost{display:inline-flex}
+  /* Score cards más compactas */
+  .kv{font-size:20px}
+  /* Forms más grandes para dedos */
+  input[type=text],input[type=number],input[type=password],textarea,select{font-size:16px;padding:12px 14px}
+  /* Pills más grandes */
+  .pill{padding:9px 14px;font-size:13px}
+  /* Tabs padding reducido */
+  .tab{padding:10px 12px;font-size:12px}
+}
+
 </style>
 </head>
 <body>
@@ -363,7 +381,7 @@ code{background:var(--card);border:1px solid var(--border);padding:2px 7px;borde
             <option value="Guadalajara">Guadalajara</option>
           </select>
         </div>
-        <div class="card" style="overflow:auto"><table class="dt" id="p-table"></table></div></div>
+        <div class="card"><div class="dt-wrap"><table class="dt" id="p-table"></table></div></div>
       </div>
     </div>
 

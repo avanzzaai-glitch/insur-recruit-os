@@ -235,19 +235,21 @@ code{background:var(--card);border:1px solid var(--border);padding:2px 7px;borde
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
-  /* Sidebar: position:fixed + width:0 en el flex para no robar espacio */
+  /* Sidebar: fuera del flujo flex con display:none */
   .sb{
-    position:fixed;top:0;left:0;height:100vh;
-    width:0!important;min-width:0!important;overflow:hidden;
-    transform:translateX(0);flex-shrink:0;transition:width .28s ease
+    display:none;
+    position:fixed;top:0;left:0;height:100vh;width:260px;
+    transform:translateX(-100%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1)
   }
   .sb.open{
-    width:260px!important;overflow:visible;
-    box-shadow:2px 0 20px rgba(0,0,0,0.25)
+    display:flex;
+    transform:translateX(0);
+    box-shadow:4px 0 24px rgba(0,0,0,0.3)
   }
-  /* Main ocupa 100% */
-  .app{display:flex;overflow:hidden}
-  .main{flex:1;width:100%!important;max-width:100%!important;min-width:0;overflow:hidden}
+  /* Main ocupa exactamente 100vw */
+  .app{display:block;height:100vh;overflow:hidden}
+  .main{width:100vw;height:100vh;display:flex;flex-direction:column;overflow:hidden}
   .hamburger{display:flex;align-items:center;justify-content:center}
   .tb-actions .btn-navy{display:none}
   .content{padding:12px 12px calc(80px + env(safe-area-inset-bottom));gap:12px}
@@ -311,6 +313,21 @@ code{background:var(--card);border:1px solid var(--border);padding:2px 7px;borde
   /* Configuración: cards de config en 1 col */
   [class*="grid"]{grid-template-columns:1fr!important}
   .ch{flex-wrap:wrap;gap:8px}
+}
+
+
+@media(min-width:769px){
+  .agent-mobile-cards{display:none}
+  .dt-desktop-only{display:block}
+}
+@media(max-width:768px){
+  .agent-mobile-cards{display:flex;flex-direction:column;gap:10px}
+  .dt-desktop-only{display:none}
+  .agent-alerts-grid{grid-template-columns:1fr 1fr!important}
+  .ab{padding:14px!important;flex-direction:column;align-items:flex-start;gap:6px}
+}
+@media(max-width:400px){
+  .agent-alerts-grid{grid-template-columns:1fr!important}
 }
 
 </style>
@@ -434,18 +451,56 @@ code{background:var(--card);border:1px solid var(--border);padding:2px 7px;borde
         
       </div>
       <div class="content">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+        <div class="agent-alerts-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
           <div class="ab ab-d" style="border-radius:var(--rl)"><span style="font-size:22px;font-weight:600">1</span><div><div style="font-weight:600">Vencen en ≤ 30 dias</div><div style="font-size:10px;margin-top:2px">Accion inmediata</div></div></div>
           <div class="ab ab-w" style="border-radius:var(--rl)"><span style="font-size:22px;font-weight:600">2</span><div><div style="font-weight:600">Vencen en 31–60 dias</div><div style="font-size:10px;margin-top:2px">Programar renovacion</div></div></div>
         </div>
-        <div class="card" style="overflow:auto">
+        <div class="card dt-desktop-only" style="overflow:hidden">
           <div class="dt-wrap"><table class="dt">
-            <thead><tr><th>Agente</th><th>RFC</th><th>Cedula</th><th>Vigencia</th><th>Estado</th><th></th></tr></thead>
-            <tbody>
+            <thead><tr><th>Agente</th><th>RFC</th><th>Cedula</th><th>Vigencia</th><th>Estado</th><th></th></tr></thead><tbody>
               <tr><td><div style="font-weight:500">Jorge Hernandez Salinas</div><div style="font-size:10px;color:var(--t3)">jhernandez.asesor@gmail.com</div></td><td style="font-family:monospace;font-size:10px;color:var(--t2)">HESJ800915HDF</td><td style="font-family:monospace;font-size:10px">CNSF-12345678</td><td><div style="font-size:10px;color:var(--dt);font-weight:600">25 dias</div><div style="margin-top:3px;height:4px;background:var(--bg);border-radius:2px"><div style="width:7%;height:100%;background:#EF4444;border-radius:2px"></div></div></td><td><span class="badge" style="background:var(--db);color:var(--dt)">Critica</span></td><td><span class="cl" onclick="go('docs')">Docs</span></td></tr>
               <tr><td><div style="font-weight:500">Patricia Moreno Ibanez</div><div style="font-size:10px;color:var(--t3)">patricia.moreno.ventas@gmail.com</div></td><td style="font-family:monospace;font-size:10px;color:var(--t2)">MOIP720310MDF</td><td style="font-family:monospace;font-size:10px">CNSF-87654321</td><td><div style="font-size:10px;color:var(--wt);font-weight:600">55 dias</div><div style="margin-top:3px;height:4px;background:var(--bg);border-radius:2px"><div style="width:15%;height:100%;background:#F59E0B;border-radius:2px"></div></div></td><td><span class="badge" style="background:var(--wb);color:var(--wt)">Proxima</span></td><td><span class="cl" onclick="go('docs')">Docs</span></td></tr>
-            </tbody>
-          </table></div>
+            </tbody></table></div></div>
+        <!-- MOBILE CARDS para agentes -->
+        <div class="agent-mobile-cards">
+          <div class="mcard">
+            <div class="mcard-head">
+              <div>
+                <div class="mcard-name">Jorge Hernandez Salinas</div>
+                <div style="font-size:11px;color:var(--t3)">jhernandez.asesor@gmail.com</div>
+              </div>
+              <span class="badge" style="background:var(--db);color:var(--dt)">⚠️ 25 días</span>
+            </div>
+            <div class="mcard-body">
+              <div class="mcard-field"><div class="mcard-label">RFC</div><div class="mcard-val" style="font-family:monospace;font-size:11px">HESJ800915HDF</div></div>
+              <div class="mcard-field"><div class="mcard-label">Cédula</div><div class="mcard-val" style="font-family:monospace;font-size:11px">CNSF-12345678</div></div>
+              <div class="mcard-field"><div class="mcard-label">Vigencia</div><div class="mcard-val" style="font-size:12px;color:var(--dt);font-weight:700">Vence 11-Abr-2026</div></div>
+              <div class="mcard-field"><div class="mcard-label">Estado</div><span class="badge ep-e">Activo</span></div>
+            </div>
+            <div class="mcard-footer">
+              <button class="btn btn-xs btn-ghost">✉️ Email</button>
+              <button class="btn btn-xs btn-teal">📋 Ver perfil</button>
+            </div>
+          </div>
+          <div class="mcard">
+            <div class="mcard-head">
+              <div>
+                <div class="mcard-name">Patricia Moreno Ibanez</div>
+                <div style="font-size:11px;color:var(--t3)">patricia.moreno.ventas@gmail.com</div>
+              </div>
+              <span class="badge" style="background:var(--wb);color:var(--wt)">⏱ 45 días</span>
+            </div>
+            <div class="mcard-body">
+              <div class="mcard-field"><div class="mcard-label">RFC</div><div class="mcard-val" style="font-family:monospace;font-size:11px">MOIP850320MDF</div></div>
+              <div class="mcard-field"><div class="mcard-label">Cédula</div><div class="mcard-val" style="font-family:monospace;font-size:11px">CNSF-87654321</div></div>
+              <div class="mcard-field"><div class="mcard-label">Vigencia</div><div class="mcard-val" style="font-size:12px;color:var(--wt);font-weight:700">Vence 01-May-2026</div></div>
+              <div class="mcard-field"><div class="mcard-label">Estado</div><span class="badge ep-e">Activo</span></div>
+            </div>
+            <div class="mcard-footer">
+              <button class="btn btn-xs btn-ghost">✉️ Email</button>
+              <button class="btn btn-xs btn-teal">📋 Ver perfil</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
